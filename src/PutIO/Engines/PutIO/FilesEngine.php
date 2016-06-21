@@ -248,4 +248,37 @@ final class FilesEngine extends PutIOHelper
             $this->putio->getOAuthToken()
         );
     }
+
+    /**
+     * Lists available subtitles for user’s preferred language. User must select “Default Subtitle Language” from settings page.
+     *
+     * @param integer $fileID
+     * @return mixed
+     */
+    public function subtitles($fileID)
+    {
+        return $this->get("files/{$fileID}/subtitles");
+    }
+
+
+    /**
+     * Sends the contents of the subtitle file. There is a powerful built in key called default. If you use it, putio searches for a subtitle in the following order and returns the first match:
+     *
+     * A subtitle file that has identical parent folder and name with the video.
+     * Subtitle file extracted from video if the format is MKV.
+     * First match from opensubtitles.
+     *
+     * @param integer $fileID
+     * @param string $key
+     * @param string $format
+     * @return mixed
+     */
+    public function subtitleDownload($fileID, $key, $format = 'srt, webvtt')
+    {
+        $data = [
+            'format' => $format
+        ];
+
+        return $this->get("files/{$fileID}/subtitles/{$key}", $data);
+    }
 }
