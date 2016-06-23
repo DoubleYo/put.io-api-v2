@@ -261,6 +261,16 @@ final class FilesEngine extends PutIOHelper
     }
 
 
+    public function getSubtitleDownloadURL($fileID, $key, $format = 'srt, webvtt')
+    {
+        return sprintf(
+            'https://api.put.io/v2/files/%d/subtitles/%s?oauth_token=%s',
+            $fileID,
+            $key,
+            $this->putio->getOAuthToken()
+        );
+    }
+
     /**
      * Sends the contents of the subtitle file. There is a powerful built in key called default. If you use it, putio searches for a subtitle in the following order and returns the first match:
      *
